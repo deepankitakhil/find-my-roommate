@@ -1,0 +1,59 @@
+{
+  "project_info": {
+    "project_number": "659853846068",
+    "firebase_url": "https://find-my-roommate.firebaseio.com",
+    "project_id": "find-my-roommate",
+    "storage_bucket": "find-my-roommate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:659853846068:android:0d70a559373abffd",
+        "android_client_info": {
+          "package_name": "com.akhil.findmyroommate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "659853846068-5sv3e3vdujrbvj0jbs73qjvgt0bulip4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.akhil.findmyroommate",
+            "certificate_hash": "E2DC9EBE424D450B1F8867655DED20E3046A6717"
+          }
+        },
+        {
+          "client_id": "659853846068-7lr6fonridha6bmlk4vo6vk3no3nk9rs.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "659853846068-t0durhk8aotcrob1da9g7rbn7g9fufqh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAr3kM-K5JsiduOFjMn3tGu3pXTUD-pl0A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "659853846068-7lr6fonridha6bmlk4vo6vk3no3nk9rs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

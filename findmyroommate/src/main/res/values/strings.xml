@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Find My Roommate</string>
+    <string name="title_text">Find My Room mate</string>
+    <string name="sign_in_button" type="id">Sign In</string>
+    <string name="facebook_application_id">210068689453269</string>
+    <string name="sign_out">Sign Out</string>
+</resources>
