@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:drawable="@drawable/default_photo" />
+
+    <item android:top="120dp">
+        <bitmap
+            android:gravity="top|center_horizontal"
+            android:src="@drawable/default_photo" />
+    </item>
+
+</layer-list>

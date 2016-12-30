@@ -13,16 +13,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <meta-data android:name="com.facebook.sdk.ApplicationId" android:value="@string/facebook_application_id"/>
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_application_id" />
+
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".WelcomeUserActivity" />
+        <activity android:name=".UserProfileActivity" />
+        <activity android:name=".UserBio" />
+        <activity android:name=".UserAdditionalPreferenceActivity" />
+        <activity android:name=".FindRoommate" />
+        <activity android:name=".EditUserProfile" />
+        <activity android:name=".UserFeedBack" />
+        <activity android:name=".UserPreferenceActivity" />
+        <activity android:name=".UserLogOut" />
+        <activity android:name=".DeleteUserAccount" />
     </application>
 
 </manifest>

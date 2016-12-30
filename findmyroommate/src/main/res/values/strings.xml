@@ -4,4 +4,23 @@
     <string name="sign_in_button" type="id">Sign In</string>
     <string name="facebook_application_id">210068689453269</string>
     <string name="sign_out">Sign Out</string>
+    <string name="welcome_title">Welcome aboard</string>
+    <string name="welcome_message">To get started with Find My Roommate, follow the simple tutorial to understand the app better.</string>
+    <string name="got_it">Got It</string>
+    <string name="message_content">To get started, complete your profile, set your preferences and we will start finding best available room mate for you!</string>
+    <string name="get_started">Get Started</string>
+    <string name="sign_out_label">Sign Out</string>
+    <string name="profile_picture_desc">Profile Picture Description</string>
+    <string name="welcome">Welcome</string>
+    <string name="edit_user_profile">Edit User Profile</string>
+    <string name="user_feedback">Feedback</string>
+    <string name="user_additional_preference">Additional Preferences</string>
+    <string name="user_preference">Preferences</string>
+    <string name="user_logout">Logout</string>
+    <string name="find_my_roommates">Find My Roommates</string>
+    <string name="sign_in_cancelled">Sign In Cancelled</string>
+    <string name="no_internet_connection">No Internet Connection</string>
+    <string name="unknown_sign_in_response">Unknown Sign In Response</string>
+    <string name="delete_user_account">Delete Account</string>
+    <string name="edit_user_bio">Edit User Bio</string>
 </resources>
