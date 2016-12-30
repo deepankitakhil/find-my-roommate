@@ -1,6 +1,8 @@
 package com.akhil.findmyroommate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -18,7 +20,8 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static final String USER_NAME = "";
+    private static final String USER_NAME = "";
+    private static final String USER_EMAIL_ID = "";
     private static int RC_SIGN_IN = 0;
     private static String TAG = "MAIN_ACTIVITY";
     private FirebaseAuth firebaseAuth;
@@ -33,9 +36,9 @@ public class LoginActivity extends AppCompatActivity {
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null)
-                    Log.d("AUTH", "user logged in: " + user.getEmail());
+                    Log.d(TAG, "user logged in: " + user.getEmail());
                 else
-                    Log.d("AUTH", "user logged out.");
+                    Log.d(TAG, "user logged out.");
             }
         };
         login();
@@ -44,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     private void login() {
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
+            Log.d(TAG, "initializing login screen.");
             startActivityForResult(
                     AuthUI.getInstance()
                             .createSignInIntentBuilder()
@@ -52,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
                                     new AuthUI.IdpConfig.Builder(AuthUI.FACEBOOK_PROVIDER).build()
                             ))
                             .build(), RC_SIGN_IN);
+
         } else {
             Log.d(TAG, firebaseAuth.getCurrentUser().getEmail());
             startActivityIntent(WelcomeUserActivity.class);
@@ -66,11 +71,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void startActivityIntent(Class className) {
-        Intent intent = new Intent(this, className);
-        if (FirebaseAuth.getInstance().getCurrentUser() != null)
-            intent.putExtra(USER_NAME, FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
-        startActivity(intent);
-        finish();
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            Log.d(TAG, "starting Welcome Screen activity");
+            Intent intent = new Intent(this, className);
+            SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+            preferences.edit().putString(USER_NAME, FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).apply();
+            preferences.edit().putString(USER_EMAIL_ID, FirebaseAuth.getInstance().getCurrentUser().getEmail()).apply();
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -86,6 +95,5 @@ public class LoginActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             startActivityIntent(WelcomeUserActivity.class);
         }
-
     }
 }

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/feedback_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/feedback_title"
+            android:textAlignment="center"
+            android:textSize="10pt" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/feedback_name" />
+
+        <TextView
+            android:id="@+id/user_email_id"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/feedback_email" />
+
+        <Spinner
+            android:id="@+id/spinner_feedback_type"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/feedback_type_list"
+            android:prompt="@string/feedback_type" />
+
+        <EditText
+            android:id="@+id/feedback_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/feedback_body"
+            android:inputType="textMultiLine"
+            android:lines="5"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/send_feedback_response"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/feedback_button" />
+    </LinearLayout>
+</LinearLayout>

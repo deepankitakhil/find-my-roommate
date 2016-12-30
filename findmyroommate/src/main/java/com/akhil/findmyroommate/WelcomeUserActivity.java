@@ -2,15 +2,13 @@ package com.akhil.findmyroommate;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.firebase.ui.auth.IdpResponse;
-
-import static com.firebase.ui.auth.ui.ExtraConstants.EXTRA_IDP_RESPONSE;
 import static java.lang.System.lineSeparator;
 
 /**
@@ -18,6 +16,7 @@ import static java.lang.System.lineSeparator;
  */
 public class WelcomeUserActivity extends AppCompatActivity implements View.OnClickListener {
 
+    private static final String USER_NAME = "";
     RelativeLayout welcomeMessageLayout;
     RelativeLayout applicationContentLayout;
 
@@ -33,8 +32,8 @@ public class WelcomeUserActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void addUserNameInIntroMessage() {
-        Intent intent = getIntent();
-        String userName = intent.getStringExtra(LoginActivity.USER_NAME);
+        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        String userName = preferences.getString(USER_NAME, null);
         TextView view = (TextView) findViewById(R.id.welcome_title);
         String welcomeMessage = getString(R.string.welcome_title) + lineSeparator() + userName;
         view.setText(welcomeMessage);
