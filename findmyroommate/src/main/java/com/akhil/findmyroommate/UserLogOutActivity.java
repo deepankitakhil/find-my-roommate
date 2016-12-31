@@ -12,7 +12,7 @@ import com.google.android.gms.tasks.Task;
 /**
  * Created by akhil on 12/28/2016.
  */
-public class UserLogOut extends AppCompatActivity {
+public class UserLogOutActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +26,7 @@ public class UserLogOut extends AppCompatActivity {
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
-                        startActivity(new Intent(UserLogOut.this, LoginActivity.class));
+                        startActivity(new Intent(UserLogOutActivity.this, LoginActivity.class));
                         finish();
                     }
                 });

@@ -6,13 +6,26 @@
 
 
     <TextView
-        android:id="@+id/additional_preferences_title"
-        android:layout_width="wrap_content"
+        android:id="@+id/find_my_roommates"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        android:text="@string/additional_preferences"
+        android:text="@string/find_my_roommates"
         android:textAlignment="center"
         android:textSize="10pt" />
+
+    <Spinner
+        android:id="@+id/spinner_feedback_type"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:entries="@array/feedback_type_list"
+        android:prompt="@string/feedback_type" />
 
     <EditText
         android:id="@+id/additional_preferences_body"
@@ -28,7 +41,7 @@
         android:id="@+id/send_additional_preferences"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Update_preferences"
+        android:text="@string/find_my_roommate"
         android:layout_margin="15dp" />
 
 </LinearLayout>

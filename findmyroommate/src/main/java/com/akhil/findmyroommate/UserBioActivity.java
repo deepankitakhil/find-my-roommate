@@ -14,8 +14,8 @@ import android.widget.TextView;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class UserBio extends AppCompatActivity implements View.OnClickListener {
-    private static final String TAG = UserBio.class.getSimpleName();
+public class UserBioActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String TAG = UserBioActivity.class.getSimpleName();
     private static final String USER_BIO_TEXT = "USER_BIO_TEXT";
     private static final String IS_USER_BIO_UPDATED = "IS_USER_BIO_UPDATED";
 

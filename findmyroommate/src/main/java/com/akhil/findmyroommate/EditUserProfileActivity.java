@@ -16,7 +16,7 @@ import android.widget.TextView;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class EditUserProfile extends AppCompatActivity implements View.OnClickListener {
+public class EditUserProfileActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     private static final String ERROR = "text field can't be empty.";

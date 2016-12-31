@@ -30,28 +30,22 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         Intent intent;
         switch (view.getId()) {
             case R.id.edit_user_bio:
-                intent = new Intent(this, UserBio.class);
+                intent = new Intent(this, UserBioActivity.class);
                 break;
             case R.id.edit_user_profile:
-                intent = new Intent(this, EditUserProfile.class);
-                break;
-            case R.id.user_preference:
-                intent = new Intent(this, UserPreferenceActivity.class);
-                break;
-            case R.id.user_additional_preference:
-                intent = new Intent(this, UserAdditionalPreferenceActivity.class);
+                intent = new Intent(this, EditUserProfileActivity.class);
                 break;
             case R.id.find_my_roommates:
-                intent = new Intent(this, FindRoommate.class);
+                intent = new Intent(this, FindMyRoommateActivity.class);
                 break;
             case R.id.user_feedback:
-                intent = new Intent(this, UserFeedBack.class);
+                intent = new Intent(this, UserFeedBackActivity.class);
                 break;
             case R.id.user_logout:
-                intent = new Intent(this, UserLogOut.class);
+                intent = new Intent(this, UserLogOutActivity.class);
                 break;
             default:
-                intent = new Intent(this, DeleteUserAccount.class);
+                intent = new Intent(this, DeleteUserAccountActivity.class);
                 break;
         }
         startActivity(intent);

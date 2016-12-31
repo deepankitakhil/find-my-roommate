@@ -14,7 +14,6 @@
     <string name="welcome">Welcome</string>
     <string name="edit_user_profile">Edit User Profile</string>
     <string name="user_feedback">Feedback</string>
-    <string name="user_additional_preference">Additional Preferences</string>
     <string name="user_preference">Preferences</string>
     <string name="user_logout">Logout</string>
     <string name="find_my_roommates">Find My Roommates</string>
@@ -37,7 +36,7 @@
     <string name="feedback_button">Send Feedback</string>
     <string name="additional_preferences">Please let us know your additional preferences, if any!</string>
     <string name="additional_preferences_content">Please provide us any additional preferences like cleanliness, knowledge of cooking , etc</string>
-    <string name="Update_preferences">Update</string>
+    <string name="find_my_roommate">Find My Roommate/s</string>
     <string name="user_bio">Tell us something about yourself(max 100 words)</string>
     <string name="user_bio_content">Having a bio is recommended because we share this information with your future roommate. An ex would be friendliness and gym freak.</string>
     <string name="user_profile_title">Edit User Profile</string>

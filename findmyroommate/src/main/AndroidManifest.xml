@@ -28,14 +28,12 @@
 
         <activity android:name=".WelcomeUserActivity" />
         <activity android:name=".UserProfileActivity" />
-        <activity android:name=".UserBio" />
-        <activity android:name=".UserAdditionalPreferenceActivity" />
-        <activity android:name=".FindRoommate" />
-        <activity android:name=".EditUserProfile" />
-        <activity android:name=".UserFeedBack" />
-        <activity android:name=".UserPreferenceActivity" />
-        <activity android:name=".UserLogOut" />
-        <activity android:name=".DeleteUserAccount" />
+        <activity android:name=".UserBioActivity" />
+        <activity android:name=".FindMyRoommateActivity" />
+        <activity android:name=".EditUserProfileActivity" />
+        <activity android:name=".UserFeedBackActivity" />
+        <activity android:name=".UserLogOutActivity" />
+        <activity android:name=".DeleteUserAccountActivity" />
     </application>
 
 </manifest>

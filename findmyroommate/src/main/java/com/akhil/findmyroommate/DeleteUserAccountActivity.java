@@ -14,7 +14,7 @@ import com.google.android.gms.tasks.Task;
 /**
  * Created by akhil on 12/29/2016.
  */
-public class DeleteUserAccount extends AppCompatActivity {
+public class DeleteUserAccountActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +35,7 @@ public class DeleteUserAccount extends AppCompatActivity {
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        startActivity(new Intent(DeleteUserAccount.this, UserProfileActivity.class));
+                        startActivity(new Intent(DeleteUserAccountActivity.this, UserProfileActivity.class));
                         finish();
                     }
                 })
@@ -50,7 +50,7 @@ public class DeleteUserAccount extends AppCompatActivity {
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            startActivity(new Intent(DeleteUserAccount.this, LoginActivity.class));
+                            startActivity(new Intent(DeleteUserAccountActivity.this, LoginActivity.class));
                             finish();
                         }
                     }

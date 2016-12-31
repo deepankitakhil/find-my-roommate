@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -15,9 +14,9 @@ import android.widget.TextView;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class UserAdditionalPreferenceActivity extends AppCompatActivity implements View.OnClickListener {
+public class FindMyRoommateActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String TAG = UserAdditionalPreferenceActivity.class.getSimpleName();
+    private static final String TAG = FindMyRoommateActivity.class.getSimpleName();
     private final static String IS_ADDITIONAL_PREFERENCES_UPDATED = "IS_ADDITIONAL_PREFERENCES_UPDATED";
     private static final String ADDITIONAL_PREFERENCES = "ADDITIONAL_PREFERENCES";
 
@@ -25,7 +24,7 @@ public class UserAdditionalPreferenceActivity extends AppCompatActivity implemen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.user_additional_peferences);
+        setContentView(R.layout.find_my_roommates);
         updateAdditionalPreferenceOnUI();
         findViewById(R.id.send_additional_preferences).setOnClickListener(this);
         getIntent();
