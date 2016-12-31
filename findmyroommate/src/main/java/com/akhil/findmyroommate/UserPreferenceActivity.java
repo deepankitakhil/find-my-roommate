@@ -7,7 +7,7 @@ import android.view.View;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class UserPreferenceActivity extends AppCompatActivity implements SearchView.OnClickListener {
+public class UserPreferenceActivity extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View view) {
 

@@ -15,7 +15,7 @@ import android.widget.TextView;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class UserAdditionalPreferenceActivity extends AppCompatActivity implements SearchView.OnClickListener {
+public class UserAdditionalPreferenceActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = UserAdditionalPreferenceActivity.class.getSimpleName();
     private final static String IS_ADDITIONAL_PREFERENCES_UPDATED = "IS_ADDITIONAL_PREFERENCES_UPDATED";

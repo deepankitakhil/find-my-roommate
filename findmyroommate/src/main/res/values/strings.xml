@@ -25,8 +25,8 @@
     <string name="edit_user_bio">Edit User Bio</string>
     <string name="profile_pic">profile pic</string>
     <string name="feedback_title">Your feedback is important to us!</string>
-    <string name="feedback_name">Name</string>
-    <string name="feedback_email">Email</string>
+    <string name="feedback_name">Name: </string>
+    <string name="feedback_email">Email: </string>
     <string name="feedback_type">Feedback Type</string>
     <string name="feedback_type_1">Great App</string>
     <string name="feedback_type_2">Not Good</string>
@@ -40,4 +40,11 @@
     <string name="Update_preferences">Update</string>
     <string name="user_bio">Tell us something about yourself(max 100 words)</string>
     <string name="user_bio_content">Having a bio is recommended because we share this information with your future roommate. An ex would be friendliness and gym freak.</string>
+    <string name="user_profile_title">Edit User Profile</string>
+    <string name="user_profile_name_first_name">First Name</string>
+    <string name="user_profile_name_last_name">Last Name</string>
+    <string name="user_profile_email">Email ID:</string>
+    <string name="user_profile_address">Address</string>
+    <string name="send_edit_user_profile">Update User Profile</string>
+    <string name="user_profile_mobile_number">Mobile</string>
 </resources>
