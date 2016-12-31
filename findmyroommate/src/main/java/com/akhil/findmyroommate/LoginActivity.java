@@ -20,8 +20,8 @@ import java.util.Arrays;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String USER_NAME = "";
-    private static final String USER_EMAIL_ID = "";
+    private static final String USER_NAME = "USER_NAME";
+    private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     private static int RC_SIGN_IN = 0;
     private static String TAG = "MAIN_ACTIVITY";
     private FirebaseAuth firebaseAuth;

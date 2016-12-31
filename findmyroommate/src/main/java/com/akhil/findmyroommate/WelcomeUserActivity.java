@@ -16,7 +16,7 @@ import static java.lang.System.lineSeparator;
  */
 public class WelcomeUserActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private static final String USER_NAME = "";
+    private static final String USER_NAME = "USER_NAME";
     RelativeLayout welcomeMessageLayout;
     RelativeLayout applicationContentLayout;
 

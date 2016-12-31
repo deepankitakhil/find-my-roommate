@@ -1,20 +1,26 @@
 package com.akhil.findmyroommate;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.TextView;
 
 /**
  * Created by akhil on 12/27/2016.
  */
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
+    private static final String USER_BIO_TEXT = "USER_BIO_TEXT";
+    private static final String IS_USER_BIO_UPDATED = "IS_USER_BIO_UPDATED";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile_activity);
         getIntent();
+        updateUserBio();
     }
 
     @Override
@@ -48,5 +54,15 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         }
         startActivity(intent);
         finish();
+    }
+
+    private void updateUserBio() {
+        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        String userBio = preferences.getString(USER_BIO_TEXT, null);
+        boolean bioUpdated = preferences.getBoolean(IS_USER_BIO_UPDATED, false);
+        if (bioUpdated) {
+            TextView userShortBio = (TextView) findViewById(R.id.user_profile_short_bio);
+            userShortBio.setText(userBio);
+        }
     }
 }

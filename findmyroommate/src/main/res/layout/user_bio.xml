@@ -4,14 +4,31 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <EditText
-        android:id="@+id/edit_user_bio"
-        style="@style/Widget.AppCompat.EditText"
-        android:layout_width="match_parent"
+
+    <TextView
+        android:id="@+id/user_bio_title"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical|center"
-        android:hint="@string/edit_user_bio"
-        android:inputType="text"
-        android:maxLength="100"
-        android:selectAllOnFocus="false" />
+        android:layout_margin="30dp"
+        android:text="@string/user_bio"
+        android:textAlignment="center"
+        android:textSize="10pt" />
+
+    <EditText
+        android:id="@+id/user_bio_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/user_bio_content"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/save_user_bio"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Update_preferences"
+        android:layout_margin="15dp" />
+
 </LinearLayout>
