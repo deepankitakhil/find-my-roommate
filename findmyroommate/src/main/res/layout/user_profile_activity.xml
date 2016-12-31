@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="76dp"
-                android:textColor="#fff"
+                android:textColor="#000"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -53,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_profile_name"
                 android:layout_centerHorizontal="true"
+                android:textAlignment="center"
                 android:layout_marginTop="12dp"
                 android:textColor="@color/tw__composer_black"
                 android:textSize="24sp" />
