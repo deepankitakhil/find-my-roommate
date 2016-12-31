@@ -23,24 +23,13 @@ import static java.lang.System.lineSeparator;
  */
 public class UserFeedBack extends AppCompatActivity implements View.OnClickListener {
 
-    public static final String MESSAGE_RFC822 = "message/rfc822";
-    public static final String ADMIN_EMAIL_ID = "deepankitakhil@gmail.com";
-    public static final String ERROR = "Feedback text can't be empty.";
+    private static final String MESSAGE_RFC822 = "message/rfc822";
+    private static final String ADMIN_EMAIL_ID = "deepankitakhil@gmail.com";
+    private static final String ERROR = "Feedback text can't be empty.";
     private static final String USER_NAME = "";
     private static final String USER_EMAIL_ID = "";
     private static final String FEEDBACK_ON_APP = "Feedback on Find My Roommate";
-    private static final String TAG = "UserFeedback";
-
-    private static boolean isMailClientPresent(Context context) {
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType(MESSAGE_RFC822);
-        final PackageManager packageManager = context.getPackageManager();
-        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, 0);
-        if (list.size() == 0)
-            return false;
-        else
-            return true;
-    }
+    private static final String TAG = UserFeedBack.class.getSimpleName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,11 +63,6 @@ public class UserFeedBack extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private String getEmailID() {
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
-        return preferences.getString(USER_EMAIL_ID, null);
-    }
-
     private void sendEmail(String emailID, String feedback, String feedbackType) {
         if (isMailClientPresent(this)) {
             Intent email = new Intent(Intent.ACTION_SEND);
@@ -106,5 +90,21 @@ public class UserFeedBack extends AppCompatActivity implements View.OnClickListe
         TextView view = (TextView) findViewById(R.id.user_email_id);
         String displayedContent = getString(R.string.feedback_email) + "\t" + emailID;
         view.setText(displayedContent);
+    }
+
+    private String getEmailID() {
+        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        return preferences.getString(USER_EMAIL_ID, null);
+    }
+
+    private boolean isMailClientPresent(Context context) {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType(MESSAGE_RFC822);
+        final PackageManager packageManager = context.getPackageManager();
+        List<ResolveInfo> list = packageManager.queryIntentActivities(intent, 0);
+        if (list.size() == 0)
+            return false;
+        else
+            return true;
     }
 }

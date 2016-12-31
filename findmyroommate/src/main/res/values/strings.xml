@@ -35,4 +35,7 @@
     <string name="feedback_body">Feedback Content</string>
     <string name="feedback_response">Response</string>
     <string name="feedback_button">Send Feedback</string>
+    <string name="additional_preferences">Please let us know your additional preferences, if any!</string>
+    <string name="additional_preferences_content">Please provide us any additional preferences like cleanliness, knowledge of cooking , etc</string>
+    <string name="Update_preferences">Update</string>
 </resources>

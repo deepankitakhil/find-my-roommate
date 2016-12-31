@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/additional_preferences_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:text="@string/additional_preferences"
+        android:textAlignment="center"
+        android:textSize="10pt" />
+
+    <EditText
+        android:id="@+id/additional_preferences_body"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:hint="@string/additional_preferences_content"
+        android:inputType="textMultiLine"
+        android:lines="5"
+        android:textAlignment="center" />
+
+    <Button
+        android:id="@+id/send_additional_preferences"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/Update_preferences"
+        android:layout_margin="15dp" />
+
+</LinearLayout>
