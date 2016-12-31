@@ -14,13 +14,14 @@ import android.widget.TextView;
 public class UserProfileActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String USER_BIO_TEXT = "USER_BIO_TEXT";
     private static final String IS_USER_BIO_UPDATED = "IS_USER_BIO_UPDATED";
+    private static final String USER_NAME = "USER_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_profile_activity);
         getIntent();
-        updateUserBio();
+        updateUserInfo();
     }
 
     @Override
@@ -56,7 +57,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
         finish();
     }
 
-    private void updateUserBio() {
+    private void updateUserInfo() {
+
         SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
         String userBio = preferences.getString(USER_BIO_TEXT, null);
         boolean bioUpdated = preferences.getBoolean(IS_USER_BIO_UPDATED, false);
@@ -64,5 +66,8 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
             TextView userShortBio = (TextView) findViewById(R.id.user_profile_short_bio);
             userShortBio.setText(userBio);
         }
+        String userName = preferences.getString(USER_NAME, null);
+        TextView userProfile = (TextView) findViewById(R.id.user_profile_name);
+        userProfile.setText(userName);
     }
 }
