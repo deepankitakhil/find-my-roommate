@@ -30,21 +30,14 @@
             android:paddingStart="5dp" />
 
         <EditText
-            android:id="@+id/user_first_name"
+            android:id="@+id/edit_user_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:hint="@string/user_profile_name_first_name" />
+            android:hint="@string/user_profile_name_user_name" />
 
         <EditText
-            android:id="@+id/user_last_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/user_profile_name_last_name" />
-
-        <EditText
-            android:id="@+id/user_mobile_number"
+            android:id="@+id/edit_user_mobile_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
@@ -54,7 +47,7 @@
 
 
         <EditText
-            android:id="@+id/user_profile_address"
+            android:id="@+id/edit_user_profile_address"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"

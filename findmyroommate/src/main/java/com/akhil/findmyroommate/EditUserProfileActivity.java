@@ -20,14 +20,9 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
     private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     private static final String ERROR = "text field can't be empty.";
-    private static final String USER_FIRST_NAME = "USER_FIRST_NAME";
-    private static final String USER_LAST_NAME = "USER_LAST_NAME";
     private static final String USER_MOBILE_NUMBER = "USER_MOBILE_NUMBER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_NAME = "USER_NAME";
-    private static final String SPACE = " ";
-    private static final int NO_OF_FIELDS = 4;
-    private int count = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +36,10 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
     private void updateUserProfileOnUI() {
         SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
-        setTextValue(preferences, USER_FIRST_NAME, R.id.user_first_name);
-        setTextValue(preferences, USER_LAST_NAME, R.id.user_last_name);
-        setTextValue(preferences, USER_MOBILE_NUMBER, R.id.user_mobile_number);
-        setTextValue(preferences, USER_ADDRESS, R.id.user_profile_address);
-        preferences.edit().putString(USER_NAME, preferences.getString(USER_FIRST_NAME, null) + SPACE + preferences.getString(USER_LAST_NAME, null)).apply();
+        setTextValue(preferences, USER_NAME, R.id.edit_user_name);
+        setTextValue(preferences, USER_MOBILE_NUMBER, R.id.edit_user_mobile_number);
+        setTextValue(preferences, USER_ADDRESS, R.id.edit_user_profile_address);
+        preferences.edit().putString(USER_NAME, preferences.getString(USER_NAME, null)).apply();
     }
 
     private void setTextValue(SharedPreferences preferences, String variableName, int id) {
@@ -58,19 +52,15 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     public void onClick(View view) {
         if (view.getId() == R.id.send_user_profile_response) {
 
-            final EditText firstNameField = getEditText(R.id.user_first_name);
+            final EditText firstNameField = getEditText(R.id.edit_user_name);
             final String firstName = getEditTextValue(firstNameField);
-            assignValueInTextField(firstNameField, USER_FIRST_NAME, firstName);
+            assignValueInTextField(firstNameField, USER_NAME, firstName);
 
-            final EditText lastNameField = getEditText(R.id.user_last_name);
-            final String lastName = getEditTextValue(lastNameField);
-            assignValueInTextField(lastNameField, USER_LAST_NAME, lastName);
-
-            final EditText mobileNumberField = getEditText(R.id.user_mobile_number);
+            final EditText mobileNumberField = getEditText(R.id.edit_user_mobile_number);
             final String mobileNumber = getEditTextValue(mobileNumberField);
             assignValueInTextField(mobileNumberField, USER_MOBILE_NUMBER, mobileNumber);
 
-            final EditText userAddressField = getEditText(R.id.user_profile_address);
+            final EditText userAddressField = getEditText(R.id.edit_user_profile_address);
             final String userAddress = getEditTextValue(userAddressField);
             assignValueInTextField(userAddressField, USER_ADDRESS, userAddress);
 

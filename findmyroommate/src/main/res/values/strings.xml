@@ -40,10 +40,9 @@
     <string name="user_bio">Tell us something about yourself(max 100 words)</string>
     <string name="user_bio_content">Having a bio is recommended because we share this information with your future roommate. An ex would be friendliness and gym freak.</string>
     <string name="user_profile_title">Edit User Profile</string>
-    <string name="user_profile_name_first_name">First Name</string>
-    <string name="user_profile_name_last_name">Last Name</string>
     <string name="user_profile_email">Email ID:</string>
     <string name="user_profile_address">Address</string>
     <string name="send_edit_user_profile">Update User Profile</string>
     <string name="user_profile_mobile_number">Mobile</string>
+    <string name="user_profile_name_user_name">Name</string>
 </resources>
