@@ -27,6 +27,8 @@
     <string name="feedback_name">Name: </string>
     <string name="feedback_email">Email: </string>
     <string name="feedback_type">Feedback Type</string>
+    <string name="sex_type">Sex</string>
+    <string name="google_maps_key">AIzaSyCiYP2D7yrtVyiqGK1PLXz1rapOl-cLm8c</string>
     <string name="feedback_type_1">Great App</string>
     <string name="feedback_type_2">Not Good</string>
     <string name="feedback_type_3">Suggestion/Improvement</string>
@@ -45,4 +47,10 @@
     <string name="send_edit_user_profile">Update User Profile</string>
     <string name="user_profile_mobile_number">Mobile</string>
     <string name="user_profile_name_user_name">Name</string>
+    <string name="sex_type_1">Male</string>
+    <string name="sex_type_2">Female</string>
+    <string name="sex_type_3">I don\'t want to provide this info</string>
+    <string name="destination_hint">Please Enter Address</string>
+    <string name="powered_by_google_text">Powered By Google Text</string>
+    <string name="selected_place">Selected Place:</string>
 </resources>
