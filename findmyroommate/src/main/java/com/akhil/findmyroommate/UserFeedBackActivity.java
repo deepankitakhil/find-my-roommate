@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -46,12 +47,11 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
         if (view.getId() == R.id.send_feedback_response) {
             final EditText feedbackField = (EditText) findViewById(R.id.feedback_body);
             String feedback = feedbackField.getText().toString();
-            if (TextUtils.isEmpty(feedback)) {
-                feedbackField.setError(ERROR);
-                return;
-            }
+            if (validateFeedbackContent(feedbackField, feedback)) return;
 
             final Spinner feedbackSpinner = (Spinner) findViewById(R.id.spinner_feedback_type);
+            if (validateFeedbackType(feedbackSpinner)) return;
+
             String feedbackType = feedbackSpinner.getSelectedItem().toString();
 
             String emailID = getEmailID();
@@ -61,6 +61,25 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
             startActivity(intent);
             finish();
         }
+    }
+
+    private boolean validateFeedbackContent(EditText feedbackField, String feedback) {
+        if (TextUtils.isEmpty(feedback)) {
+            feedbackField.setError(ERROR);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean validateFeedbackType(Spinner feedbackSpinner) {
+        final int selectedItemPosition = feedbackSpinner.getSelectedItemPosition();
+        if (selectedItemPosition == 0) {
+            Toast.makeText(UserFeedBackActivity.this,
+                    "Please Select the feedback type !!", Toast.LENGTH_LONG)
+                    .show();
+            return true;
+        }
+        return false;
     }
 
     private void sendEmail(String emailID, String feedback, String feedbackType) {

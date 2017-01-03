@@ -28,6 +28,7 @@
     <string name="feedback_email">Email: </string>
     <string name="feedback_type">Feedback Type</string>
     <string name="sex_type">Sex</string>
+    <string name="profession_type">Profession</string>
     <string name="google_maps_key">AIzaSyCiYP2D7yrtVyiqGK1PLXz1rapOl-cLm8c</string>
     <string name="feedback_type_1">Great App</string>
     <string name="feedback_type_2">Not Good</string>
@@ -53,4 +54,7 @@
     <string name="destination_hint">Please Enter Address</string>
     <string name="powered_by_google_text">Powered By Google Text</string>
     <string name="selected_place">Selected Place:</string>
+    <string name="please_select">Please Select</string>
+    <string name="occupation_type_1">Student</string>
+    <string name="occupation_type_2">Working Professional</string>
 </resources>

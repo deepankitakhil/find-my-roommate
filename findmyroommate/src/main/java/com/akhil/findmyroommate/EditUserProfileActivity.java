@@ -14,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,6 +45,8 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String TAG = EditUserProfileActivity.class.getSimpleName();
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
+    private static final String USER_SEX = "USER_SEX";
+    private static final String USER_PROFESSION = "USER_PROFESSION";
     SharedPreferences preferences;
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
@@ -135,13 +138,23 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         setTextValue(preferences, USER_NAME, R.id.edit_user_name);
         setTextValue(preferences, USER_MOBILE_NUMBER, R.id.edit_user_mobile_number);
         setTextValue(preferences, USER_ADDRESS, R.id.autoCompleteTextView);
+        setSpinnerTextValue(preferences, USER_SEX, R.id.spinner_sex);
+        setSpinnerTextValue(preferences, USER_PROFESSION, R.id.spinner_profession);
         preferences.edit().putString(USER_NAME, preferences.getString(USER_NAME, null)).apply();
     }
 
     private void setTextValue(SharedPreferences preferences, String variableName, int id) {
+
         String value = preferences.getString(variableName, null);
         TextView textView = (TextView) findViewById(id);
         textView.setText(value);
+    }
+
+    private void setSpinnerTextValue(SharedPreferences preferences, String variableName, int id) {
+
+        int value = preferences.getInt(variableName, -1);
+        Spinner spinner = (Spinner) findViewById(id);
+        spinner.setSelection(value);
     }
 
     @Override
@@ -156,13 +169,35 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             final String mobileNumber = getEditTextValue(mobileNumberField);
             assignValueInTextField(mobileNumberField, USER_MOBILE_NUMBER, mobileNumber);
 
+            final Spinner sex = getSpinnerText(R.id.spinner_sex);
+            setSelectionIndex(sex, USER_SEX, preferences);
+
+            final Spinner profession = getSpinnerText(R.id.spinner_profession);
+            setSelectionIndex(profession, USER_PROFESSION, preferences);
+
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.edit_user_profile_id);
-            if (!checkBlankFields(viewGroup)) {
+            if (!checkBlankFields(viewGroup) && !isSpinnerValueSetToDefault(viewGroup)) {
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 finish();
             }
         }
+    }
+
+    private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {
+        preferences.edit().putInt(input, spinner.getSelectedItemPosition()).apply();
+    }
+
+    private int getSelectionIndex(Spinner spinner, String string) {
+        int index = 0;
+
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(string)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
     }
 
     private boolean checkBlankFields(ViewGroup viewGroup) {
@@ -181,6 +216,25 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         return isBlank;
     }
 
+    private boolean isSpinnerValueSetToDefault(ViewGroup viewGroup) {
+        boolean isBlank = false;
+        int count = viewGroup.getChildCount();
+        for (int index = 0; index < count; index++) {
+            View view = viewGroup.getChildAt(index);
+            if (view instanceof Spinner) {
+                Spinner spinner = (Spinner) view;
+                if (spinner.getSelectedItemPosition() == 0) {
+                    Toast.makeText(EditUserProfileActivity.this,
+                            "Please choose a valid value from all existing dropdown"
+                                    + " menu items!!", Toast.LENGTH_LONG)
+                            .show();
+                    isBlank = true;
+                }
+            }
+        }
+        return isBlank;
+    }
+
     @NonNull
     private String getEditTextValue(EditText editText) {
         return editText.getText().toString();
@@ -188,6 +242,10 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
     private EditText getEditText(int id) {
         return (EditText) findViewById(id);
+    }
+
+    private Spinner getSpinnerText(int id) {
+        return (Spinner) findViewById(id);
     }
 
     private void assignValueInTextField(EditText editText, String constField, String value) {
