@@ -27,6 +27,13 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import vo.User;
 
 import static android.text.Html.fromHtml;
 
@@ -41,17 +48,22 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String USER_MOBILE_NUMBER = "USER_MOBILE_NUMBER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_NAME = "USER_NAME";
-    private static final int GOOGLE_API_CLIENT_ID = 0;
+    private static final String USER_BIO_TEXT = "USER_BIO_TEXT";
     private static final String TAG = EditUserProfileActivity.class.getSimpleName();
+    private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     private static final String USER_SEX = "USER_SEX";
     private static final String USER_PROFESSION = "USER_PROFESSION";
-    SharedPreferences preferences;
+    private static final String USER_SEX_VALUE = "USER_SEX_VALUE";
+    private static final String USER_PROFESSION_VALUE = "USER_PROFESSION_VALUE";
+
+    private SharedPreferences preferences;
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
-
+    private FirebaseDatabase firebaseDatabase;
+    private DatabaseReference databaseReference;
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
         @SuppressWarnings("deprecation")
@@ -92,7 +104,13 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         getIntent();
         addUserEmailIDInFeedbackBody();
         initializeLocationIdentifier();
+        initializeFireBaseDB();
         updateUserProfileOnUI();
+    }
+
+    private void initializeFireBaseDB() {
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference();
     }
 
     private void initializeLocationIdentifier() {
@@ -170,13 +188,16 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             assignValueInTextField(mobileNumberField, USER_MOBILE_NUMBER, mobileNumber);
 
             final Spinner sex = getSpinnerText(R.id.spinner_sex);
+            preferences.edit().putString(USER_SEX_VALUE, sex.getSelectedItem().toString()).apply();
             setSelectionIndex(sex, USER_SEX, preferences);
 
             final Spinner profession = getSpinnerText(R.id.spinner_profession);
+            preferences.edit().putString(USER_PROFESSION_VALUE, profession.getSelectedItem().toString()).apply();
             setSelectionIndex(profession, USER_PROFESSION, preferences);
 
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.edit_user_profile_id);
             if (!checkBlankFields(viewGroup) && !isSpinnerValueSetToDefault(viewGroup)) {
+                //updateUserProfileInDatabase();
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 finish();
@@ -184,20 +205,38 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         }
     }
 
-    private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {
-        preferences.edit().putInt(input, spinner.getSelectedItemPosition()).apply();
+    private void updateUserProfileInDatabase() {
+        Log.d(TAG, "Attempt to save user object.");
+        String name = preferences.getString(USER_NAME, null);
+        String phoneNumber = preferences.getString(USER_MOBILE_NUMBER, null);
+        String userBio = preferences.getString(USER_BIO_TEXT, null);
+        String email = preferences.getString(USER_EMAIL_ID, null);
+        String address = preferences.getString(USER_ADDRESS, null);
+        String sex = preferences.getString(USER_SEX_VALUE, null);
+        String profession = preferences.getString(USER_PROFESSION_VALUE, null);
+        User user = new User(name, phoneNumber, profession, userBio, email, sex, address);
+        databaseReference.setValue(user);
+        Log.d(TAG, "Updated user object.");
+
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    User person = postSnapshot.getValue(User.class);
+                    String string = "Name: " + person.getName() + "\nAddress: " + person.getAddress() + "\n\n";
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                System.out.println("The read failed: " + databaseError.getMessage());
+            }
+
+        });
     }
 
-    private int getSelectionIndex(Spinner spinner, String string) {
-        int index = 0;
-
-        for (int i = 0; i < spinner.getCount(); i++) {
-            if (spinner.getItemAtPosition(i).toString().equalsIgnoreCase(string)) {
-                index = i;
-                break;
-            }
-        }
-        return index;
+    private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {
+        preferences.edit().putInt(input, spinner.getSelectedItemPosition()).apply();
     }
 
     private boolean checkBlankFields(ViewGroup viewGroup) {

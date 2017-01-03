@@ -1,7 +1,5 @@
 package vo;
 
-import com.google.android.gms.location.places.Place;
-
 /**
  * Created by akhil on 1/2/2017.
  */
@@ -13,9 +11,9 @@ public class User {
     private String userBio;
     private String email;
     private String sex;
-    private Place address;
+    private String address;
 
-    public User(String name, String phoneNumber, String profession, String userBio, String email, String sex, Place address) {
+    public User(String name, String phoneNumber, String profession, String userBio, String email, String sex, String address) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profession = profession;
@@ -24,6 +22,7 @@ public class User {
         this.sex = sex;
         this.address = address;
     }
+
 
     public String getName() {
         return name;
@@ -49,7 +48,7 @@ public class User {
         return sex;
     }
 
-    public Place getAddress() {
+    public String getAddress() {
         return address;
     }
 }
