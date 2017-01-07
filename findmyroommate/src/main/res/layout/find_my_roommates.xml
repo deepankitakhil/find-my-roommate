@@ -89,12 +89,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
                 android:text="@string/same_address_location" />
 
             <RadioButton
                 android:id="@+id/different_address_location"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
                 android:hint="@string/user_profile_address"
                 android:text="@string/different_address_location" />
         </RadioGroup>
@@ -133,14 +141,16 @@
             android:entries="@array/search_criteria_list"
             android:prompt="@string/search_criteria" />
 
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/additional_preference" />
+
         <EditText
             android:id="@+id/additional_preferences_body"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:hint="@string/additional_preferences_content"
-            android:inputType="textMultiLine"
-            android:lines="3"
             android:maxLength="50"
             android:textAlignment="center" />
 

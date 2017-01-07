@@ -37,7 +37,6 @@
     <string name="feedback_body">Feedback Content</string>
     <string name="feedback_response">Response</string>
     <string name="feedback_button">Send Feedback</string>
-    <string name="additional_preferences">Please let us know your additional preferences, if any!</string>
     <string name="additional_preferences_content">Please provide us any additional preferences like cleanliness, knowledge of cooking , etc</string>
     <string name="find_my_roommate">Find My Roommate/s</string>
     <string name="user_bio">Tell us something about yourself(max 100 words)</string>
@@ -74,4 +73,5 @@
     <string name="dietary_preference_five">Doesn\'t matter</string>
     <string name="dietary_preference">Dietary Preference</string>
     <string name="update_bio">Update Bio</string>
+    <string name="additional_preference">Additional Preference</string>
 </resources>
