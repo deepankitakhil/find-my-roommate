@@ -11,17 +11,19 @@ public class User {
     private String userBio;
     private String email;
     private String sex;
+    private String dietaryPreference;
     private String address;
     private String additionalPreferences;
 
     public User(String name, String phoneNumber, String profession, String userBio, String email,
-                String sex, String address, String additionalPreferences) {
+                String sex, String dietaryPreference, String address, String additionalPreferences) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profession = profession;
         this.userBio = userBio;
         this.email = email;
         this.sex = sex;
+        this.dietaryPreference = dietaryPreference;
         this.address = address;
         this.additionalPreferences = additionalPreferences;
     }
@@ -59,5 +61,10 @@ public class User {
 
     public String getAdditionalPreferences() {
         return additionalPreferences;
+    }
+
+
+    public String getDietaryPreference() {
+        return dietaryPreference;
     }
 }

@@ -56,6 +56,8 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String USER_SEX_VALUE = "USER_SEX_VALUE";
     private static final String USER_PROFESSION_VALUE = "USER_PROFESSION_VALUE";
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
+    private static final String USER_DIETARY_PREFERENCES = "USER_DIETARY_PREFERENCES";
+    private static final String USER_DIETARY_PREFERENCES_VALUE = "USER_DIETARY_PREFERENCES_VALUE";
 
     private SharedPreferences preferences;
     private AutoCompleteTextView mAutocompleteTextView;
@@ -157,6 +159,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         setTextValue(preferences, USER_ADDRESS, R.id.autoCompleteTextView);
         setSpinnerTextValue(preferences, USER_SEX, R.id.spinner_sex);
         setSpinnerTextValue(preferences, USER_PROFESSION, R.id.spinner_profession);
+        setSpinnerTextValue(preferences, USER_DIETARY_PREFERENCES, R.id.dietary_preference);
         preferences.edit().putString(USER_NAME, preferences.getString(USER_NAME, null)).apply();
     }
 
@@ -194,6 +197,10 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             preferences.edit().putString(USER_PROFESSION_VALUE, profession.getSelectedItem().toString()).apply();
             setSelectionIndex(profession, USER_PROFESSION, preferences);
 
+            final Spinner dietaryPreference = getSpinnerText(R.id.dietary_preference);
+            preferences.edit().putString(USER_DIETARY_PREFERENCES_VALUE, dietaryPreference.getSelectedItem().toString()).apply();
+            setSelectionIndex(dietaryPreference, USER_DIETARY_PREFERENCES, preferences);
+
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.edit_user_profile_id);
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 updateUserProfileInDatabase();
@@ -213,8 +220,9 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String address = preferences.getString(USER_ADDRESS, null);
         String sex = preferences.getString(USER_SEX_VALUE, null);
         String profession = preferences.getString(USER_PROFESSION_VALUE, null);
+        String dietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
         String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        User user = new User(name, phoneNumber, profession, userBio, email, sex, address, additionalPreferences);
+        User user = new User(name, phoneNumber, profession, userBio, email, sex,dietaryPreference, address, additionalPreferences);
         databaseReference.child("user").setValue(user);
         Log.d(TAG, "Updated user object.");
 

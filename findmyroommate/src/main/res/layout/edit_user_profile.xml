@@ -68,6 +68,19 @@
         android:entries="@array/profession_type_list"
         android:prompt="@string/profession_type" />
 
+    <Spinner
+        android:id="@+id/dietary_preference"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:entries="@array/dietary_preference_list"
+        android:prompt="@string/dietary_preference" />
+
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"
         android:layout_width="fill_parent"
