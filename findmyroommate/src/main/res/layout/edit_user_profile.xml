@@ -42,6 +42,11 @@
         android:inputType="number"
         android:maxLength="10" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/sex" />
+
     <Spinner
         android:id="@+id/spinner_sex"
         android:layout_width="fill_parent"
@@ -54,6 +59,11 @@
         android:layout_marginTop="10dp"
         android:entries="@array/sex_type_list"
         android:prompt="@string/sex_type" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/profession_type" />
 
     <Spinner
         android:id="@+id/spinner_profession"
@@ -68,6 +78,11 @@
         android:entries="@array/profession_type_list"
         android:prompt="@string/profession_type" />
 
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/dietary_preference" />
+
     <Spinner
         android:id="@+id/dietary_preference"
         android:layout_width="fill_parent"
@@ -80,6 +95,11 @@
         android:layout_marginTop="10dp"
         android:entries="@array/dietary_preference_list"
         android:prompt="@string/dietary_preference" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/address" />
 
     <AutoCompleteTextView
         android:id="@+id/autoCompleteTextView"

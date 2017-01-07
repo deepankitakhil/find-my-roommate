@@ -14,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,9 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     private final static String IS_ADDITIONAL_PREFERENCES_UPDATED = "IS_ADDITIONAL_PREFERENCES_UPDATED";
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
     private static final String USER_ADDRESS = "USER_ADDRESS";
+    private static final String USER_SEX = "USER_SEX";
+    private static final String USER_PROFESSION = "USER_PROFESSION";
+    private static final String USER_DIETARY_PREFERENCES = "USER_DIETARY_PREFERENCES";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
@@ -142,7 +146,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         populateDefaultAddress();
         initializeRadioGroupListeners();
         initializeLocationIdentifier();
-        updateAdditionalPreferenceOnUI();
+        updateUserPreferenceOnUI();
         findViewById(R.id.find_my_roommates).setOnClickListener(this);
         getIntent();
     }
@@ -161,9 +165,9 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 if (!TextUtils.isEmpty(additionalPreferenceText)) {
                     Log.d(TAG, "saving additional preferences.");
-                    SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
                     preferences.edit().putString(USER_ADDITIONAL_PREFERENCES, additionalPreferenceText).apply();
                     preferences.edit().putBoolean(IS_ADDITIONAL_PREFERENCES_UPDATED, true).apply();
+                    //queryDatabaseToFetchMatchedUsers();
                 } else
                     Log.d(TAG, "no additional preference");
                 Intent intent = new Intent(this, UserProfileActivity.class);
@@ -173,11 +177,27 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         }
     }
 
-    private void updateAdditionalPreferenceOnUI() {
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
-        String additionalPreference = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        TextView additionalPreferenceText = (TextView) findViewById(R.id.additional_preferences_body);
-        additionalPreferenceText.setText(additionalPreference);
+    private void updateUserPreferenceOnUI() {
+        setTextValue(preferences, USER_ADDRESS, R.id.autoCompleteTextView);
+        setTextValue(preferences, USER_ADDITIONAL_PREFERENCES, R.id.additional_preferences_body);
+        setSpinnerTextValue(preferences, USER_SEX, R.id.spinner_sex);
+        setSpinnerTextValue(preferences, USER_PROFESSION, R.id.spinner_profession);
+        setSpinnerTextValue(preferences, USER_DIETARY_PREFERENCES, R.id.dietary_preference);
+
+    }
+
+    private void setTextValue(SharedPreferences preferences, String variableName, int id) {
+
+        String value = preferences.getString(variableName, null);
+        TextView textView = (TextView) findViewById(id);
+        textView.setText(value);
+    }
+
+    private void setSpinnerTextValue(SharedPreferences preferences, String variableName, int id) {
+
+        int value = preferences.getInt(variableName, -1);
+        Spinner spinner = (Spinner) findViewById(id);
+        spinner.setSelection(value);
     }
 
     private void populateDefaultAddress() {
