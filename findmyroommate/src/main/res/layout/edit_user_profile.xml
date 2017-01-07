@@ -65,7 +65,7 @@
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:entries="@array/occupation_type_list"
+        android:entries="@array/profession_type_list"
         android:prompt="@string/profession_type" />
 
     <AutoCompleteTextView

@@ -12,8 +12,10 @@ public class User {
     private String email;
     private String sex;
     private String address;
+    private String additionalPreferences;
 
-    public User(String name, String phoneNumber, String profession, String userBio, String email, String sex, String address) {
+    public User(String name, String phoneNumber, String profession, String userBio, String email,
+                String sex, String address, String additionalPreferences) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profession = profession;
@@ -21,8 +23,11 @@ public class User {
         this.email = email;
         this.sex = sex;
         this.address = address;
+        this.additionalPreferences = additionalPreferences;
     }
 
+    public User() {
+    }
 
     public String getName() {
         return name;
@@ -50,5 +55,9 @@ public class User {
 
     public String getAddress() {
         return address;
+    }
+
+    public String getAdditionalPreferences() {
+        return additionalPreferences;
     }
 }

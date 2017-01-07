@@ -52,9 +52,26 @@
     <string name="sex_type_2">Female</string>
     <string name="sex_type_3">I don\'t want to provide this info</string>
     <string name="destination_hint">Please Enter Address</string>
-    <string name="powered_by_google_text">Powered By Google Text</string>
+    <string name="powered_by_google_text">Address Search Powered By Google</string>
     <string name="selected_place">Selected Place:</string>
     <string name="please_select">Please Select</string>
     <string name="occupation_type_1">Student</string>
     <string name="occupation_type_2">Working Professional</string>
+    <string name="same_address_location">Same As Profile Address</string>
+    <string name="different_address_location">Different Location Address</string>
+    <string name="enter_desired_location">Address</string>
+    <string name="search_criteria">Search Criteria:</string>
+    <string name="address">Address:</string>
+    <string name="occupation">Occupation</string>
+    <string name="sex">Sex</string>
+    <string name="search_criteria_one">I have a rented/own flat. Looking out for a room mate</string>
+    <string name="search_criteria_two">Looking out for a vacancy in already rented flat.</string>
+    <string name="search_criteria_three">Looking out for roommate. Will book flat later.</string>
+    <string name="dietary_preference_one">Vegan</string>
+    <string name="dietary_preference_two">Vegetarian</string>
+    <string name="dietary_preference_three">No meat but eggs allowed</string>
+    <string name="dietary_preference_four">Non Vegetarian</string>
+    <string name="dietary_preference_five">Doesn\'t matter</string>
+    <string name="dietary_preference">Dietary Preference</string>
+    <string name="update_bio">Update Bio</string>
 </resources>

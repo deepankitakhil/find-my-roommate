@@ -1,47 +1,157 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <TextView
-        android:id="@+id/find_my_roommates"
+    <LinearLayout
+        android:id="@+id/find_my_roommates_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="30dp"
-        android:text="@string/find_my_roommates"
-        android:textAlignment="center"
-        android:textSize="10pt" />
+        android:orientation="vertical">
 
-    <Spinner
-        android:id="@+id/spinner_feedback_type"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_marginBottom="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:entries="@array/feedback_type_list"
-        android:prompt="@string/feedback_type" />
+        <TextView
+            android:id="@+id/find_my_roommates_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="@string/find_my_roommates"
+            android:textAlignment="center"
+            android:textSize="10pt" />
 
-    <EditText
-        android:id="@+id/additional_preferences_body"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:hint="@string/additional_preferences_content"
-        android:inputType="textMultiLine"
-        android:lines="5"
-        android:textAlignment="center" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/sex" />
 
-    <Button
-        android:id="@+id/send_additional_preferences"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/find_my_roommate"
-        android:layout_margin="15dp" />
+        <Spinner
+            android:id="@+id/spinner_sex"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/sex_type_list"
+            android:prompt="@string/sex_type" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/occupation" />
+
+        <Spinner
+            android:id="@+id/spinner_profession"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/profession_type_list"
+            android:prompt="@string/profession_type" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/address" />
+
+        <RadioGroup
+            android:id="@+id/address_location"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/same_address_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="@string/same_address_location" />
+
+            <RadioButton
+                android:id="@+id/different_address_location"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/user_profile_address"
+                android:text="@string/different_address_location" />
+        </RadioGroup>
+
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextView"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/user_profile_address" />
+
+        <ImageView
+            android:id="@+id/poweredBy"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:contentDescription="@string/powered_by_google_text"
+            android:src="@drawable/powered_by_google_light"
+            android:textAlignment="textEnd" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_criteria" />
+
+
+        <Spinner
+            android:id="@+id/search_criteria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/search_criteria_list"
+            android:prompt="@string/search_criteria" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/dietary_preference" />
+
+        <Spinner
+            android:id="@+id/dietary_preference"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/dietary_preference_list"
+            android:prompt="@string/dietary_preference" />
+
+
+        <EditText
+            android:id="@+id/additional_preferences_body"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:hint="@string/additional_preferences_content"
+            android:inputType="textMultiLine"
+            android:lines="3"
+            android:maxLength="50"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/find_my_roommates"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:text="@string/find_my_roommate" />
+    </LinearLayout>
+
+</ScrollView>

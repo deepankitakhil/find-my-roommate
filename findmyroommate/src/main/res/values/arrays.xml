@@ -15,10 +15,32 @@
         <item>@string/sex_type_3</item>
     </string-array>
 
-    <string-array name="occupation_type_list">
+    <string-array name="profession_type_list">
         <item>@string/please_select</item>
         <item>@string/occupation_type_1</item>
         <item>@string/occupation_type_2</item>
+    </string-array>
+
+    <string-array name="search_criteria_list">
+        <item>@string/please_select</item>
+        <item>@string/search_criteria_one</item>
+        <item>@string/search_criteria_two</item>
+        <item>@string/search_criteria_three</item>
+    </string-array>
+
+    <string-array name="dietary_preference_list">
+        <item>@string/please_select</item>
+        <item>@string/dietary_preference_one</item>
+        <item>@string/dietary_preference_two</item>
+        <item>@string/dietary_preference_three</item>
+        <item>@string/dietary_preference_four</item>
+        <item>@string/dietary_preference_five</item>
+    </string-array>
+
+    <string-array name="address_type_list">
+        <item>@string/please_select</item>
+        <item>@string/same_address_location</item>
+        <item>@string/different_address_location</item>
     </string-array>
 
 </resources>

@@ -6,10 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -33,6 +31,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import util.ViewValidator;
 import vo.User;
 
 import static android.text.Html.fromHtml;
@@ -44,7 +43,6 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         GoogleApiClient.ConnectionCallbacks {
 
     private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
-    private static final String ERROR = "text field can't be empty.";
     private static final String USER_MOBILE_NUMBER = "USER_MOBILE_NUMBER";
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_NAME = "USER_NAME";
@@ -57,6 +55,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String USER_PROFESSION = "USER_PROFESSION";
     private static final String USER_SEX_VALUE = "USER_SEX_VALUE";
     private static final String USER_PROFESSION_VALUE = "USER_PROFESSION_VALUE";
+    private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
 
     private SharedPreferences preferences;
     private AutoCompleteTextView mAutocompleteTextView;
@@ -196,8 +195,8 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             setSelectionIndex(profession, USER_PROFESSION, preferences);
 
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.edit_user_profile_id);
-            if (!checkBlankFields(viewGroup) && !isSpinnerValueSetToDefault(viewGroup)) {
-                //updateUserProfileInDatabase();
+            if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
+                updateUserProfileInDatabase();
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 finish();
@@ -214,8 +213,9 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String address = preferences.getString(USER_ADDRESS, null);
         String sex = preferences.getString(USER_SEX_VALUE, null);
         String profession = preferences.getString(USER_PROFESSION_VALUE, null);
-        User user = new User(name, phoneNumber, profession, userBio, email, sex, address);
-        databaseReference.setValue(user);
+        String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
+        User user = new User(name, phoneNumber, profession, userBio, email, sex, address, additionalPreferences);
+        databaseReference.child("user").setValue(user);
         Log.d(TAG, "Updated user object.");
 
         databaseReference.addValueEventListener(new ValueEventListener() {
@@ -239,40 +239,6 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         preferences.edit().putInt(input, spinner.getSelectedItemPosition()).apply();
     }
 
-    private boolean checkBlankFields(ViewGroup viewGroup) {
-        boolean isBlank = false;
-        int count = viewGroup.getChildCount();
-        for (int index = 0; index < count; index++) {
-            View view = viewGroup.getChildAt(index);
-            if (view instanceof EditText) {
-                EditText edittext = (EditText) view;
-                if (TextUtils.isEmpty(edittext.getText().toString())) {
-                    edittext.setError(ERROR);
-                    isBlank = true;
-                }
-            }
-        }
-        return isBlank;
-    }
-
-    private boolean isSpinnerValueSetToDefault(ViewGroup viewGroup) {
-        boolean isBlank = false;
-        int count = viewGroup.getChildCount();
-        for (int index = 0; index < count; index++) {
-            View view = viewGroup.getChildAt(index);
-            if (view instanceof Spinner) {
-                Spinner spinner = (Spinner) view;
-                if (spinner.getSelectedItemPosition() == 0) {
-                    Toast.makeText(EditUserProfileActivity.this,
-                            "Please choose a valid value from all existing dropdown"
-                                    + " menu items!!", Toast.LENGTH_LONG)
-                            .show();
-                    isBlank = true;
-                }
-            }
-        }
-        return isBlank;
-    }
 
     @NonNull
     private String getEditTextValue(EditText editText) {
