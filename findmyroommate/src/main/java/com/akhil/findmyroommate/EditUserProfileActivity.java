@@ -31,7 +31,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import util.KeyUtils;
 import util.ViewValidator;
+import vo.ApplicationConstants;
 import vo.User;
 
 import static android.text.Html.fromHtml;
@@ -58,12 +60,12 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
     private static final String USER_DIETARY_PREFERENCES = "USER_DIETARY_PREFERENCES";
     private static final String USER_DIETARY_PREFERENCES_VALUE = "USER_DIETARY_PREFERENCES_VALUE";
+    private static final String ERROR_MESSAGE = "Google Places API connection failed with error code:";
 
     private SharedPreferences preferences;
     private AutoCompleteTextView mAutocompleteTextView;
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
-    private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
@@ -98,7 +100,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit_user_profile);
         findViewById(R.id.send_user_profile_response).setOnClickListener(this);
@@ -110,8 +112,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     }
 
     private void initializeFireBaseDB() {
-        firebaseDatabase = FirebaseDatabase.getInstance();
-        databaseReference = firebaseDatabase.getReference();
+        databaseReference = FirebaseDatabase.getInstance().getReference(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue());
     }
 
     private void initializeLocationIdentifier() {
@@ -142,7 +143,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
                 + connectionResult.getErrorCode());
 
         Toast.makeText(this,
-                "Google Places API connection failed with error code:" +
+                ERROR_MESSAGE +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
     }
@@ -222,24 +223,24 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String profession = preferences.getString(USER_PROFESSION_VALUE, null);
         String dietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
         String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        User user = new User(name, phoneNumber, profession, userBio, email, sex,dietaryPreference, address, additionalPreferences);
-        databaseReference.child("user").setValue(user);
-        Log.d(TAG, "Updated user object.");
-
-        databaseReference.addValueEventListener(new ValueEventListener() {
+        final User user = new User(name, phoneNumber, profession, userBio, email, sex, dietaryPreference, address, additionalPreferences);
+        final String key = KeyUtils.encodeFireBaseKey(user.getEmail());
+        databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue()).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot snapshot) {
-                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                    User person = postSnapshot.getValue(User.class);
-                    String string = "Name: " + person.getName() + "\nAddress: " + person.getAddress() + "\n\n";
+                if (snapshot.getValue() != null) {
+                    Log.d(TAG, "updating user.");
+                    databaseReference.child(key).setValue(user);
+                } else {
+                    Log.d(TAG, "creating new user.");
+                    databaseReference = databaseReference.child(key).push();
+                    databaseReference.setValue(user);
                 }
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                System.out.println("The read failed: " + databaseError.getMessage());
             }
-
         });
     }
 

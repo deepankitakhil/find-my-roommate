@@ -16,6 +16,10 @@ import com.google.android.gms.tasks.Task;
  */
 public class DeleteUserAccountActivity extends AppCompatActivity {
 
+    private static final String MESSAGE = "Are you sure you want to delete this account?";
+    private static final String CONFIRMATION = "Yes, delete it!";
+    private static final String REJECTION = "No";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,16 +27,16 @@ public class DeleteUserAccountActivity extends AppCompatActivity {
         deleteAccount();
     }
 
-    public void deleteAccount() {
+    private void deleteAccount() {
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to delete this account?")
-                .setPositiveButton("Yes, delete it!", new DialogInterface.OnClickListener() {
+                .setMessage(MESSAGE)
+                .setPositiveButton(CONFIRMATION, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         deleteUserAccount();
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton(REJECTION, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         startActivity(new Intent(DeleteUserAccountActivity.this, UserProfileActivity.class));

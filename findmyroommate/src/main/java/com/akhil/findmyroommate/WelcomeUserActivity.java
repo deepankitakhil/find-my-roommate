@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import vo.ApplicationConstants;
+
 import static java.lang.System.lineSeparator;
 
 /**
@@ -32,20 +34,20 @@ public class WelcomeUserActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void addUserNameInIntroMessage() {
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
         String userName = preferences.getString(USER_NAME, null);
         TextView view = (TextView) findViewById(R.id.welcome_title);
         String welcomeMessage = getString(R.string.welcome_title) + lineSeparator() + userName;
         view.setText(welcomeMessage);
     }
 
-    public void dismissWelcomeMessageBox(View view) {
+    private void dismissWelcomeMessageBox() {
         welcomeMessageLayout.setVisibility(View.INVISIBLE);
         applicationContentLayout.setVisibility(View.VISIBLE);
 
     }
 
-    public void dismissGetStarted(View view) {
+    private void dismissGetStarted() {
         applicationContentLayout.setVisibility(View.INVISIBLE);
         Intent intent = new Intent(this, UserProfileActivity.class);
         startActivity(intent);
@@ -55,8 +57,8 @@ public class WelcomeUserActivity extends AppCompatActivity implements View.OnCli
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.dismiss_welcome_box)
-            dismissWelcomeMessageBox(view);
+            dismissWelcomeMessageBox();
         if (view.getId() == R.id.dismiss_get_started)
-            dismissGetStarted(view);
+            dismissGetStarted();
     }
 }

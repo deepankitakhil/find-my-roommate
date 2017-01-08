@@ -8,6 +8,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 
+import vo.ApplicationConstants;
+
 /**
  * Created by akhil on 12/27/2016.
  */
@@ -54,7 +56,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
 
     private void updateUserInfo() {
 
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
         String userBio = preferences.getString(USER_BIO_TEXT, null);
         boolean bioUpdated = preferences.getBoolean(IS_USER_BIO_UPDATED, false);
         if (bioUpdated) {

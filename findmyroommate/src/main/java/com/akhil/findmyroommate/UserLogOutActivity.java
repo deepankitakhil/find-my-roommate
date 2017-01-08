@@ -21,7 +21,7 @@ public class UserLogOutActivity extends AppCompatActivity {
         logout();
     }
 
-    public void logout() {
+    private void logout() {
         AuthUI.getInstance()
                 .signOut(this)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {

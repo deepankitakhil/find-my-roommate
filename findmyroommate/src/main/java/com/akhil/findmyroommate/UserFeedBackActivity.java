@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import vo.ApplicationConstants;
+
 import static java.lang.System.lineSeparator;
 
 /**
@@ -31,6 +33,8 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
     private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     private static final String FEEDBACK_ON_APP = "Feedback on Find My Roommate";
     private static final String TAG = UserFeedBackActivity.class.getSimpleName();
+    private static final String SEND_EMAIL = "Send Email.";
+    private static final String ERROR_MESSAGE = "Please Select the feedback type !!";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +79,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
         final int selectedItemPosition = feedbackSpinner.getSelectedItemPosition();
         if (selectedItemPosition == 0) {
             Toast.makeText(UserFeedBackActivity.this,
-                    "Please Select the feedback type !!", Toast.LENGTH_LONG)
+                    ERROR_MESSAGE, Toast.LENGTH_LONG)
                     .show();
             return true;
         }
@@ -89,7 +93,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{emailID, ADMIN_EMAIL_ID});
             email.putExtra(Intent.EXTRA_SUBJECT, FEEDBACK_ON_APP);
             email.putExtra(Intent.EXTRA_TEXT, feedback + lineSeparator() + feedbackType);
-            startActivity(Intent.createChooser(email, "Send Email."));
+            startActivity(Intent.createChooser(email, SEND_EMAIL));
             finish();
         } else {
             Log.d(TAG, "No email ID provider installed. System will not be able to send email!");
@@ -97,7 +101,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
     }
 
     private void addUserNameInFeedbackBody() {
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
         String userName = preferences.getString(USER_NAME, null);
         TextView view = (TextView) findViewById(R.id.user_name);
         String displayedContent = getString(R.string.feedback_name) + "\t" + userName;
@@ -112,7 +116,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
     }
 
     private String getEmailID() {
-        SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+        SharedPreferences preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
         return preferences.getString(USER_EMAIL_ID, null);
     }
 

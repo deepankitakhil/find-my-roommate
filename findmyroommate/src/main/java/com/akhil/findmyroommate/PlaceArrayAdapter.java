@@ -1,7 +1,7 @@
 package com.akhil.findmyroommate;
 
 import android.content.Context;
-import android.text.style.CharacterStyle;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
@@ -19,6 +19,7 @@ import com.google.android.gms.maps.model.LatLngBounds;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -27,28 +28,22 @@ import java.util.concurrent.TimeUnit;
 
 public class PlaceArrayAdapter
         extends ArrayAdapter<PlaceArrayAdapter.PlaceAutocomplete> implements Filterable {
+    private static final int WAIT_TIME = 60;
     private static final String TAG = "PlaceArrayAdapter";
+    private static final String ERROR = "Error: ";
     private GoogleApiClient mGoogleApiClient;
     private AutocompleteFilter mPlaceFilter;
     private LatLngBounds mBounds;
-    private ArrayList<PlaceAutocomplete> mResultList;
+    private List<PlaceAutocomplete> mResultList;
 
-    /**
-     * Constructor
-     *
-     * @param context  Context
-     * @param resource Layout resource
-     * @param bounds   Used to specify the search bounds
-     * @param filter   Used to specify place types
-     */
-    public PlaceArrayAdapter(Context context, int resource, LatLngBounds bounds,
-                             AutocompleteFilter filter) {
+    PlaceArrayAdapter(Context context, int resource, LatLngBounds bounds,
+                      AutocompleteFilter filter) {
         super(context, resource);
         mBounds = bounds;
         mPlaceFilter = filter;
     }
 
-    public void setGoogleApiClient(GoogleApiClient googleApiClient) {
+    void setGoogleApiClient(GoogleApiClient googleApiClient) {
         if (googleApiClient == null || !googleApiClient.isConnected()) {
             mGoogleApiClient = null;
         } else {
@@ -66,7 +61,7 @@ public class PlaceArrayAdapter
         return mResultList.get(position);
     }
 
-    private ArrayList<PlaceAutocomplete> getPredictions(CharSequence constraint) {
+    private List<PlaceAutocomplete> getPredictions(CharSequence constraint) {
         if (mGoogleApiClient != null) {
             Log.i(TAG, "Executing autocomplete query for: " + constraint);
             PendingResult<AutocompletePredictionBuffer> results =
@@ -74,10 +69,10 @@ public class PlaceArrayAdapter
                             .getAutocompletePredictions(mGoogleApiClient, constraint.toString(),
                                     mBounds, mPlaceFilter);
             AutocompletePredictionBuffer autocompletePredictions = results
-                    .await(60, TimeUnit.SECONDS);
+                    .await(WAIT_TIME, TimeUnit.SECONDS);
             final Status status = autocompletePredictions.getStatus();
             if (!status.isSuccess()) {
-                Toast.makeText(getContext(), "Error: " + status.toString(),
+                Toast.makeText(getContext(), ERROR + status.toString(),
                         Toast.LENGTH_SHORT).show();
                 Log.e(TAG, "Error getting place predictions: " + status
                         .toString());
@@ -88,7 +83,7 @@ public class PlaceArrayAdapter
             Log.i(TAG, "Query completed. Received " + autocompletePredictions.getCount()
                     + " predictions.");
             Iterator<AutocompletePrediction> iterator = autocompletePredictions.iterator();
-            ArrayList resultList = new ArrayList<>(autocompletePredictions.getCount());
+            List<PlaceAutocomplete> resultList = new ArrayList<>(autocompletePredictions.getCount());
             while (iterator.hasNext()) {
                 AutocompletePrediction prediction = iterator.next();
                 resultList.add(new PlaceAutocomplete(prediction.getPlaceId(), prediction.getFullText(null)));
@@ -100,9 +95,10 @@ public class PlaceArrayAdapter
         return null;
     }
 
+    @NonNull
     @Override
     public Filter getFilter() {
-        Filter filter = new Filter() {
+        return new Filter() {
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults results = new FilterResults();
@@ -125,13 +121,12 @@ public class PlaceArrayAdapter
                 }
             }
         };
-        return filter;
     }
 
     class PlaceAutocomplete {
 
-        public CharSequence placeId;
-        public CharSequence description;
+        CharSequence placeId;
+        CharSequence description;
 
         PlaceAutocomplete(CharSequence placeId, CharSequence description) {
             this.placeId = placeId;

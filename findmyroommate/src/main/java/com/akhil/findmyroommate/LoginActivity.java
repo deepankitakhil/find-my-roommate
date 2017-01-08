@@ -14,6 +14,8 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 
+import vo.ApplicationConstants;
+
 /**
  * Created by akhil on 12/26/2016.
  */
@@ -74,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             Log.d(TAG, "starting Welcome Screen activity");
             Intent intent = new Intent(this, className);
-            SharedPreferences preferences = this.getSharedPreferences("com.akhil.findmyroommate", Context.MODE_PRIVATE);
+            SharedPreferences preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
             preferences.edit().putString(USER_NAME, FirebaseAuth.getInstance().getCurrentUser().getDisplayName()).apply();
             preferences.edit().putString(USER_EMAIL_ID, FirebaseAuth.getInstance().getCurrentUser().getEmail()).apply();
             startActivity(intent);
