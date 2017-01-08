@@ -222,7 +222,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
         final User user = new User(name, phoneNumber, profession, userBio, email, sex, dietaryPreference, address, additionalPreferences);
         final String key = KeyUtils.encodeFireBaseKey(user.getEmail());
-        databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue()).child(key).setValue(user);
+        databaseReference.child(key).setValue(user);
     }
 
     private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {

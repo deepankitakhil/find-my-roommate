@@ -67,4 +67,8 @@ public class User {
     public String getDietaryPreference() {
         return dietaryPreference;
     }
+
+    public void updateUserBio(String userBio) {
+        this.userBio = userBio;
+    }
 }
