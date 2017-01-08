@@ -25,11 +25,8 @@ import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import util.KeyUtils;
 import util.ViewValidator;
@@ -225,23 +222,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
         final User user = new User(name, phoneNumber, profession, userBio, email, sex, dietaryPreference, address, additionalPreferences);
         final String key = KeyUtils.encodeFireBaseKey(user.getEmail());
-        databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue()).child(key).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snapshot) {
-                if (snapshot.getValue() != null) {
-                    Log.d(TAG, "updating user.");
-                    databaseReference.child(key).setValue(user);
-                } else {
-                    Log.d(TAG, "creating new user.");
-                    databaseReference = databaseReference.child(key).push();
-                    databaseReference.setValue(user);
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
+        databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue()).child(key).setValue(user);
     }
 
     private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {
