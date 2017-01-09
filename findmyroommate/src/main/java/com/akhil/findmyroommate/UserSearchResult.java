@@ -5,9 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
+import vo.SearchResult;
 import vo.User;
 
 /**
@@ -21,12 +26,24 @@ public class UserSearchResult extends AppCompatActivity implements View.OnClickL
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.user_search_result);
-        findViewById(R.id.send_message_to_selected_user).setOnClickListener(this);
         Bundle bundle = getIntent().getExtras();
         ArrayList<User> searchResult = bundle.getParcelableArrayList(SEARCH_RESULT);
-        for (User user : searchResult) {
-            //print user in text box
+        List<SearchResult> displaySearchResultList = new ArrayList<>();
+        for (User user : searchResult)
+            displaySearchResultList.add(new SearchResult(user.getName(), user.getProfession(), user.getUserBio(),
+                    user.getSex(), user.getDietaryPreference(), user.getAddress(), user.getAdditionalPreferences()));
+        final ViewGroup layout = (ViewGroup) findViewById(R.id.user_search_result);
+
+        for (int index = 0; index < displaySearchResultList.size(); index++) {
+            TextView textView = new TextView(this);
+            textView.setText(displaySearchResultList.get(0).toString());
+            layout.addView(textView);
         }
+
+        Button button = new Button(this);
+        button.setText("Contact Users");
+        button.setOnClickListener(this);
+        layout.addView(button);
     }
 
     @Override

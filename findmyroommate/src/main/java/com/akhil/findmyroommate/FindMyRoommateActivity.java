@@ -218,7 +218,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
 
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 UserSelection userSelection = new UserSelection(sexValue, professionValue, dietaryPreferenceValue, searchCriteriaValue, addressValue, additionalPreferencesValue);
-                final ArrayList<User> matchedUsers = queryDatabaseToFetchMatchedUsers(userSelection);
+                ArrayList<User> matchedUsers = queryDatabaseToFetchMatchedUsers(userSelection);
                 if (matchedUsers.size() == 0) {
                     Toast.makeText(FindMyRoommateActivity.this,
                             ZERO_RESULT_ERROR_MESSAGE, Toast.LENGTH_LONG)
