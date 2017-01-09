@@ -35,6 +35,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.ObjectUtil;
 import util.SpinnerUtils;
 import util.ViewValidator;
 import vo.ApplicationConstants;
@@ -49,6 +50,7 @@ import static android.text.Html.fromHtml;
 public class FindMyRoommateActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
         GoogleApiClient.ConnectionCallbacks, ValueEventListener {
 
+    private static final String ADDITIONAL_PREFERENCE = "additionalPreference";
     private static final String TAG = FindMyRoommateActivity.class.getSimpleName();
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
     private static final String USER_ADDRESS = "USER_ADDRESS";
@@ -60,7 +62,8 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     private static final String USER_DESIRED_LOCATION_PREFERENCE = "USER_DESIRED_LOCATION_PREFERENCE";
     private static final String USER_SEARCH_CRITERIA = "USER_SEARCH_CRITERIA";
-    private static final String ERROR_MESSAGE = "Google Places API connection failed with error code:";
+    private static final String CONNECTION_RESULT_ERROR_MESSAGE = "Google Places API connection failed with error code:";
+    private static final String ZERO_RESULT_ERROR_MESSAGE = "Applied filters returned 0 results. Please update the search criteria and try again.";
 
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -69,7 +72,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     private AutoCompleteTextView autoCompleteTextView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private List<User> filteredUserList;
+    private List<User> userList;
 
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
@@ -146,7 +149,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
                 + connectionResult.getErrorCode());
 
         Toast.makeText(this,
-                ERROR_MESSAGE +
+                CONNECTION_RESULT_ERROR_MESSAGE +
                         connectionResult.getErrorCode(),
                 Toast.LENGTH_LONG).show();
     }
@@ -214,7 +217,15 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
 
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 UserSelection userSelection = new UserSelection(sexValue, professionValue, dietaryPreferenceValue, searchCriteriaValue, addressValue, additionalPreferencesValue);
-                queryDatabaseToFetchMatchedUsers(userSelection);
+                final List<User> matchedUsers = queryDatabaseToFetchMatchedUsers(userSelection);
+                if (matchedUsers.size() == 0) {
+                    Toast.makeText(FindMyRoommateActivity.this,
+                            ZERO_RESULT_ERROR_MESSAGE, Toast.LENGTH_LONG)
+                            .show();
+                } else {
+
+                }
+
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 finish();
@@ -240,6 +251,13 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     }
 
     private List<User> queryDatabaseToFetchMatchedUsers(UserSelection selection) {
+        List<User> filteredUserList = new ArrayList<>();
+        List<String> ignoredFields = new ArrayList<>();
+        ignoredFields.add(ADDITIONAL_PREFERENCE);
+        for (User user : userList) {
+            if (ObjectUtil.areEqualObjects(selection, user, ignoredFields))
+                filteredUserList.add(user);
+        }
         return filteredUserList;
     }
 
@@ -279,10 +297,10 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
 
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
-        filteredUserList = new ArrayList<>();
+        userList = new ArrayList<>();
         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
             User user = userSnapshot.getValue(User.class);
-            filteredUserList.add(user);
+            userList.add(user);
         }
     }
 

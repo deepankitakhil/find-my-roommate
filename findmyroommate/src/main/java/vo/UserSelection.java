@@ -5,40 +5,43 @@ package vo;
  */
 
 public class UserSelection {
-    private String desiredSex;
-    private String desiredProfession;
-    private String desiredDietaryPreference;
+    private String sex;
+    private String profession;
+    private String dietaryPreference;
     private String searchCriteria;
-    private String desiredLocationPreference;
+    private String address;
     private String additionalPreference;
 
-    public UserSelection(String desiredSex, String desiredProfession, String desiredDietaryPreference, String searchCriteria, String desiredLocationPreference, String additionalPreference) {
-        this.desiredSex = desiredSex;
-        this.desiredProfession = desiredProfession;
-        this.desiredDietaryPreference = desiredDietaryPreference;
+    public UserSelection(String sex, String profession, String dietaryPreference, String searchCriteria, String address, String additionalPreference) {
+        this.sex = sex;
+        this.profession = profession;
+        this.dietaryPreference = dietaryPreference;
         this.searchCriteria = searchCriteria;
-        this.desiredLocationPreference = desiredLocationPreference;
+        this.address = address;
         this.additionalPreference = additionalPreference;
     }
 
-    public String getDesiredSex() {
-        return desiredSex;
+    public UserSelection() {
     }
 
-    public String getDesiredProfession() {
-        return desiredProfession;
+    public String getSex() {
+        return sex;
     }
 
-    public String getDesiredDietaryPreference() {
-        return desiredDietaryPreference;
+    public String getProfession() {
+        return profession;
+    }
+
+    public String getDietaryPreference() {
+        return dietaryPreference;
     }
 
     public String getSearchCriteria() {
         return searchCriteria;
     }
 
-    public String getDesiredLocationPreference() {
-        return desiredLocationPreference;
+    public String getAddress() {
+        return address;
     }
 
     public String getAdditionalPreference() {
