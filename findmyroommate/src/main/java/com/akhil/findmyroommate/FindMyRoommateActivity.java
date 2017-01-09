@@ -45,7 +45,7 @@ import static android.text.Html.fromHtml;
  * Created by akhil on 12/27/2016.
  */
 public class FindMyRoommateActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener,
-        GoogleApiClient.ConnectionCallbacks {
+        GoogleApiClient.ConnectionCallbacks, ValueEventListener {
 
     private static final String TAG = FindMyRoommateActivity.class.getSimpleName();
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
@@ -71,6 +71,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     private AutoCompleteTextView autoCompleteTextView;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
+    private List<User> filteredUserList;
 
     private ResultCallback<PlaceBuffer> mUpdatePlaceDetailsCallback
             = new ResultCallback<PlaceBuffer>() {
@@ -166,7 +167,10 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         populateDefaultAddress();
         initializeRadioGroupListeners();
         initializeLocationIdentifier();
+        initializeFireBaseDB();
         updateUserPreferenceOnUI();
+        databaseReference = databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue());
+        databaseReference.addValueEventListener(this);
         findViewById(R.id.find_my_roommates).setOnClickListener(this);
         getIntent();
     }
@@ -233,19 +237,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     }
 
     private List<User> queryDatabaseToFetchMatchedUsers() {
-
-        initializeFireBaseDB();
-        List<User> users = getAllUsersFromDataBase();
-
-        final String desiredSex = preferences.getString(USER_SEX_VALUE, null);
-        final String desiredProfession = preferences.getString(USER_PROFESSION_VALUE, null);
-        final String desiredDietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
-        final String desiredLocationPreference = preferences.getString(USER_DESIRED_LOCATION_PREFERENCE, null);
-        final String additionalPreference = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        final String searchCriteria = preferences.getString(USER_SEARCH_CRITERIA_VALUE, null);
-
-
-        return null;
+        return filteredUserList;
     }
 
     private void initializeFireBaseDB() {
@@ -282,24 +274,26 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         autoCompleteTextView.setEnabled(false);
     }
 
-    private List<User> getAllUsersFromDataBase() {
-        final List<User>[] users = new List[1];
-        databaseReference.child(ApplicationConstants.APPLICATION_DB_ROOT_REFERENCE.getValue()).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                users[0] = new ArrayList<>();
-                for (DataSnapshot noteDataSnapshot : dataSnapshot.getChildren()) {
-                    User user = noteDataSnapshot.getValue(User.class);
-                    users[0].add(user);
-                }
-            }
+    @Override
+    public void onDataChange(DataSnapshot dataSnapshot) {
+        filteredUserList = new ArrayList<>();
+        final String desiredSex = preferences.getString(USER_SEX_VALUE, null);
+        final String desiredProfession = preferences.getString(USER_PROFESSION_VALUE, null);
+        final String desiredDietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
+        final String desiredLocationPreference = preferences.getString(USER_DESIRED_LOCATION_PREFERENCE, null);
+        final String additionalPreference = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
+        final String searchCriteria = preferences.getString(USER_SEARCH_CRITERIA_VALUE, null);
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
+            User user = userSnapshot.getValue(User.class);
 
-            }
-        });
-        return users[0];
+            filteredUserList.add(user);
+        }
+    }
+
+    @Override
+    public void onCancelled(DatabaseError databaseError) {
+
     }
 }
 
