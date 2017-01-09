@@ -41,7 +41,7 @@ public class UserProfileActivity extends AppCompatActivity implements View.OnCli
                 intent = new Intent(this, FindMyRoommateActivity.class);
                 break;
             case R.id.user_feedback:
-                intent = new Intent(this, UserFeedBackActivity.class);
+                intent = new Intent(this, UserFeedbackActivity.class);
                 break;
             case R.id.user_logout:
                 intent = new Intent(this, UserLogOutActivity.class);

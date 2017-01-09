@@ -35,7 +35,7 @@
         <activity android:name=".UserBioActivity" />
         <activity android:name=".FindMyRoommateActivity" />
         <activity android:name=".EditUserProfileActivity" />
-        <activity android:name=".UserFeedBackActivity" />
+        <activity android:name=".UserFeedbackActivity" />
         <activity android:name=".UserLogOutActivity" />
         <activity android:name=".DeleteUserAccountActivity" />
     </application>

@@ -24,7 +24,7 @@ import static java.lang.System.lineSeparator;
 /**
  * Created by akhil on 12/27/2016.
  */
-public class UserFeedBackActivity extends AppCompatActivity implements View.OnClickListener {
+public class UserFeedbackActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String MESSAGE_RFC822 = "message/rfc822";
     private static final String ADMIN_EMAIL_ID = "deepankitakhil@gmail.com";
@@ -32,7 +32,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
     private static final String USER_NAME = "USER_NAME";
     private static final String USER_EMAIL_ID = "USER_EMAIL_ID";
     private static final String FEEDBACK_ON_APP = "Feedback on Find My Roommate";
-    private static final String TAG = UserFeedBackActivity.class.getSimpleName();
+    private static final String TAG = UserFeedbackActivity.class.getSimpleName();
     private static final String SEND_EMAIL = "Send Email.";
     private static final String ERROR_MESSAGE = "Please Select the feedback type !!";
 
@@ -78,7 +78,7 @@ public class UserFeedBackActivity extends AppCompatActivity implements View.OnCl
     private boolean validateFeedbackType(Spinner feedbackSpinner) {
         final int selectedItemPosition = feedbackSpinner.getSelectedItemPosition();
         if (selectedItemPosition == 0) {
-            Toast.makeText(UserFeedBackActivity.this,
+            Toast.makeText(UserFeedbackActivity.this,
                     ERROR_MESSAGE, Toast.LENGTH_LONG)
                     .show();
             return true;
