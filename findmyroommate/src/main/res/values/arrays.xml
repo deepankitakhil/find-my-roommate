@@ -12,7 +12,6 @@
         <item>@string/please_select</item>
         <item>@string/sex_type_1</item>
         <item>@string/sex_type_2</item>
-        <item>@string/sex_type_3</item>
     </string-array>
 
     <string-array name="profession_type_list">
@@ -34,7 +33,6 @@
         <item>@string/dietary_preference_two</item>
         <item>@string/dietary_preference_three</item>
         <item>@string/dietary_preference_four</item>
-        <item>@string/dietary_preference_five</item>
     </string-array>
 
     <string-array name="address_type_list">

@@ -12,11 +12,12 @@ public class User {
     private String email;
     private String sex;
     private String dietaryPreference;
+    private String searchCriteria;
     private String address;
     private String additionalPreferences;
 
     public User(String name, String phoneNumber, String profession, String userBio, String email,
-                String sex, String dietaryPreference, String address, String additionalPreferences) {
+                String sex, String dietaryPreference, String searchCriteria, String address, String additionalPreferences) {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.profession = profession;
@@ -24,6 +25,7 @@ public class User {
         this.email = email;
         this.sex = sex;
         this.dietaryPreference = dietaryPreference;
+        this.searchCriteria = searchCriteria;
         this.address = address;
         this.additionalPreferences = additionalPreferences;
     }
@@ -70,5 +72,9 @@ public class User {
 
     public void updateUserBio(String userBio) {
         this.userBio = userBio;
+    }
+
+    public String getSearchCriteria() {
+        return searchCriteria;
     }
 }

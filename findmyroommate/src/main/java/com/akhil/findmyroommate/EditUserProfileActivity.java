@@ -57,6 +57,8 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
     private static final String USER_ADDITIONAL_PREFERENCES = "USER_ADDITIONAL_PREFERENCES";
     private static final String USER_DIETARY_PREFERENCES = "USER_DIETARY_PREFERENCES";
     private static final String USER_DIETARY_PREFERENCES_VALUE = "USER_DIETARY_PREFERENCES_VALUE";
+    private static final String USER_SEARCH_CRITERIA = "USER_SEARCH_CRITERIA";
+    private static final String USER_SEARCH_CRITERIA_VALUE = "USER_SEARCH_CRITERIA_VALUE";
     private static final String ERROR_MESSAGE = "Google Places API connection failed with error code:";
 
     private SharedPreferences preferences;
@@ -158,6 +160,7 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         setSpinnerTextValue(preferences, USER_SEX, R.id.spinner_sex);
         setSpinnerTextValue(preferences, USER_PROFESSION, R.id.spinner_profession);
         setSpinnerTextValue(preferences, USER_DIETARY_PREFERENCES, R.id.dietary_preference);
+        setSpinnerTextValue(preferences, USER_SEARCH_CRITERIA, R.id.search_criteria);
         preferences.edit().putString(USER_NAME, preferences.getString(USER_NAME, null)).apply();
     }
 
@@ -199,6 +202,10 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
             preferences.edit().putString(USER_DIETARY_PREFERENCES_VALUE, dietaryPreference.getSelectedItem().toString()).apply();
             setSelectionIndex(dietaryPreference, USER_DIETARY_PREFERENCES, preferences);
 
+            final Spinner searchCriteria = getSpinnerText(R.id.search_criteria);
+            preferences.edit().putString(USER_SEARCH_CRITERIA_VALUE, searchCriteria.getSelectedItem().toString()).apply();
+            setSelectionIndex(searchCriteria, USER_SEARCH_CRITERIA, preferences);
+
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.edit_user_profile_id);
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 updateUserProfileInDatabase();
@@ -219,8 +226,9 @@ public class EditUserProfileActivity extends AppCompatActivity implements View.O
         String sex = preferences.getString(USER_SEX_VALUE, null);
         String profession = preferences.getString(USER_PROFESSION_VALUE, null);
         String dietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
+        String searchCriteria = preferences.getString(USER_SEARCH_CRITERIA_VALUE, null);
         String additionalPreferences = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        final User user = new User(name, phoneNumber, profession, userBio, email, sex, dietaryPreference, address, additionalPreferences);
+        final User user = new User(name, phoneNumber, profession, userBio, email, sex, dietaryPreference,searchCriteria, address, additionalPreferences);
         final String key = KeyUtils.encodeFireBaseKey(user.getEmail());
         databaseReference.child(key).setValue(user);
     }

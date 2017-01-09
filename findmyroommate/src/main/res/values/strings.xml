@@ -49,7 +49,7 @@
     <string name="user_profile_name_user_name">Name</string>
     <string name="sex_type_1">Male</string>
     <string name="sex_type_2">Female</string>
-    <string name="sex_type_3">I don\'t want to provide this info</string>
+    <string name="neutral_option">I don\'t want to provide this info</string>
     <string name="destination_hint">Please Enter Address</string>
     <string name="powered_by_google_text">Address Search Powered By Google</string>
     <string name="selected_place">Selected Place:</string>
@@ -74,4 +74,5 @@
     <string name="dietary_preference">Dietary Preference</string>
     <string name="update_bio">Update Bio</string>
     <string name="additional_preference">Additional Preference</string>
+    <string name="search_criteria_text">Housing Options</string>
 </resources>
