@@ -223,12 +223,10 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
                             ZERO_RESULT_ERROR_MESSAGE, Toast.LENGTH_LONG)
                             .show();
                 } else {
-
+                    Intent intent = new Intent(this, UserSearchResult.class);
+                    startActivity(intent);
+                    finish();
                 }
-
-                Intent intent = new Intent(this, UserProfileActivity.class);
-                startActivity(intent);
-                finish();
             }
         }
     }
