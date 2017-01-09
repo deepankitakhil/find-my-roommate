@@ -64,6 +64,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     private static final String USER_SEARCH_CRITERIA = "USER_SEARCH_CRITERIA";
     private static final String CONNECTION_RESULT_ERROR_MESSAGE = "Google Places API connection failed with error code:";
     private static final String ZERO_RESULT_ERROR_MESSAGE = "Applied filters returned 0 results. Please update the search criteria and try again.";
+    private static final String SEARCH_RESULT = "searchResult";
 
     private GoogleApiClient mGoogleApiClient;
     private PlaceArrayAdapter mPlaceArrayAdapter;
@@ -217,13 +218,16 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
 
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
                 UserSelection userSelection = new UserSelection(sexValue, professionValue, dietaryPreferenceValue, searchCriteriaValue, addressValue, additionalPreferencesValue);
-                final List<User> matchedUsers = queryDatabaseToFetchMatchedUsers(userSelection);
+                final ArrayList<User> matchedUsers = queryDatabaseToFetchMatchedUsers(userSelection);
                 if (matchedUsers.size() == 0) {
                     Toast.makeText(FindMyRoommateActivity.this,
                             ZERO_RESULT_ERROR_MESSAGE, Toast.LENGTH_LONG)
                             .show();
                 } else {
                     Intent intent = new Intent(this, UserSearchResult.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putParcelableArrayList(SEARCH_RESULT, matchedUsers);
+                    intent.putExtras(bundle);
                     startActivity(intent);
                     finish();
                 }
@@ -248,8 +252,8 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         return (EditText) findViewById(id);
     }
 
-    private List<User> queryDatabaseToFetchMatchedUsers(UserSelection selection) {
-        List<User> filteredUserList = new ArrayList<>();
+    private ArrayList<User> queryDatabaseToFetchMatchedUsers(UserSelection selection) {
+        ArrayList<User> filteredUserList = new ArrayList<>();
         List<String> ignoredFields = new ArrayList<>();
         ignoredFields.add(ADDITIONAL_PREFERENCE);
         for (User user : userList) {
