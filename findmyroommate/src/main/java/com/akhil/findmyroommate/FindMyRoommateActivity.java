@@ -35,9 +35,11 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import util.SpinnerUtils;
 import util.ViewValidator;
 import vo.ApplicationConstants;
 import vo.User;
+import vo.UserSelection;
 
 import static android.text.Html.fromHtml;
 
@@ -52,16 +54,12 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     private static final String USER_ADDRESS = "USER_ADDRESS";
     private static final String USER_SEX = "USER_SEX";
     private static final String USER_PROFESSION = "USER_PROFESSION";
-    private static final String USER_SEX_VALUE = "USER_SEX_VALUE";
-    private static final String USER_PROFESSION_VALUE = "USER_PROFESSION_VALUE";
     private static final String USER_DIETARY_PREFERENCES = "USER_DIETARY_PREFERENCES";
-    private static final String USER_DIETARY_PREFERENCES_VALUE = "USER_DIETARY_PREFERENCES_VALUE";
     private static final int GOOGLE_API_CLIENT_ID = 0;
     private static final LatLngBounds BOUNDS_MOUNTAIN_VIEW = new LatLngBounds(
             new LatLng(37.398160, -122.180831), new LatLng(37.430610, -121.972090));
     private static final String USER_DESIRED_LOCATION_PREFERENCE = "USER_DESIRED_LOCATION_PREFERENCE";
     private static final String USER_SEARCH_CRITERIA = "USER_SEARCH_CRITERIA";
-    private static final String USER_SEARCH_CRITERIA_VALUE = "USER_SEARCH_CRITERIA_VALUE";
     private static final String ERROR_MESSAGE = "Google Places API connection failed with error code:";
 
     private GoogleApiClient mGoogleApiClient;
@@ -163,7 +161,8 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.find_my_roommates);
-        preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
+        setValueInSpinner();
+        initializeSharedPreferences();
         populateDefaultAddress();
         initializeRadioGroupListeners();
         initializeLocationIdentifier();
@@ -173,6 +172,15 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         databaseReference.addValueEventListener(this);
         findViewById(R.id.find_my_roommates).setOnClickListener(this);
         getIntent();
+    }
+
+    private void initializeSharedPreferences() {
+        preferences = this.getSharedPreferences(ApplicationConstants.APPLICATION_PACKAGE_NAME.getValue(), Context.MODE_PRIVATE);
+    }
+
+    private void setValueInSpinner() {
+        LinearLayout viewGroup = (LinearLayout) findViewById(R.id.find_my_roommates_view);
+        SpinnerUtils.setDefaultValueInSpinner(this, viewGroup);
     }
 
     private void initializeRadioGroupListeners() {
@@ -185,28 +193,28 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         if (view.getId() == R.id.find_my_roommates) {
             LinearLayout viewGroup = (LinearLayout) findViewById(R.id.find_my_roommates_view);
 
-            final EditText additionalPreferences = getEditText(R.id.additional_preferences_body);
-            final String additionalPreferencesValue = getEditTextValue(additionalPreferences);
-            assignValueInTextField(additionalPreferences, USER_ADDITIONAL_PREFERENCES, additionalPreferencesValue);
-
-            final Spinner searchCriteria = getSpinnerText(R.id.search_criteria);
-            preferences.edit().putString(USER_SEARCH_CRITERIA_VALUE, searchCriteria.getSelectedItem().toString()).apply();
-            setSelectionIndex(searchCriteria, USER_SEARCH_CRITERIA, preferences);
-
-            final Spinner dietaryPreference = getSpinnerText(R.id.dietary_preference);
-            preferences.edit().putString(USER_DIETARY_PREFERENCES_VALUE, dietaryPreference.getSelectedItem().toString()).apply();
-            setSelectionIndex(dietaryPreference, USER_DIETARY_PREFERENCES, preferences);
-
             final Spinner sex = getSpinnerText(R.id.spinner_sex);
-            preferences.edit().putString(USER_SEX_VALUE, sex.getSelectedItem().toString()).apply();
-            setSelectionIndex(sex, USER_SEX, preferences);
+            final String sexValue = sex.getSelectedItem().toString();
 
             final Spinner profession = getSpinnerText(R.id.spinner_profession);
-            preferences.edit().putString(USER_PROFESSION_VALUE, profession.getSelectedItem().toString()).apply();
-            setSelectionIndex(profession, USER_PROFESSION, preferences);
+            final String professionValue = profession.getSelectedItem().toString();
+
+            final Spinner dietaryPreference = getSpinnerText(R.id.dietary_preference);
+            final String dietaryPreferenceValue = dietaryPreference.getSelectedItem().toString();
+
+            final Spinner searchCriteria = getSpinnerText(R.id.search_criteria);
+            final String searchCriteriaValue = searchCriteria.getSelectedItem().toString();
+
+            final String addressValue = autoCompleteTextView.getText().toString();
+
+            final EditText additionalPreferences = getEditText(R.id.additional_preferences_body);
+            final String additionalPreferencesValue = getEditTextValue(additionalPreferences);
+            preferences.edit().putString(USER_ADDITIONAL_PREFERENCES, additionalPreferencesValue).apply();
+            assignValueInTextField(additionalPreferences, additionalPreferencesValue);
 
             if (!ViewValidator.isFieldBlank(viewGroup) && !ViewValidator.isSpinnerValueSetToDefault(viewGroup)) {
-                queryDatabaseToFetchMatchedUsers();
+                UserSelection userSelection = new UserSelection(sexValue, professionValue, dietaryPreferenceValue, searchCriteriaValue, addressValue, additionalPreferencesValue);
+                queryDatabaseToFetchMatchedUsers(userSelection);
                 Intent intent = new Intent(this, UserProfileActivity.class);
                 startActivity(intent);
                 finish();
@@ -218,13 +226,8 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         return (Spinner) findViewById(id);
     }
 
-    private void setSelectionIndex(Spinner spinner, String input, SharedPreferences preferences) {
-        preferences.edit().putInt(input, spinner.getSelectedItemPosition()).apply();
-    }
-
-    private void assignValueInTextField(EditText editText, String constField, String value) {
+    private void assignValueInTextField(EditText editText, String value) {
         editText.setText(value);
-        preferences.edit().putString(constField, value).apply();
     }
 
     @NonNull
@@ -236,7 +239,7 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
         return (EditText) findViewById(id);
     }
 
-    private List<User> queryDatabaseToFetchMatchedUsers() {
+    private List<User> queryDatabaseToFetchMatchedUsers(UserSelection selection) {
         return filteredUserList;
     }
 
@@ -277,16 +280,8 @@ public class FindMyRoommateActivity extends AppCompatActivity implements View.On
     @Override
     public void onDataChange(DataSnapshot dataSnapshot) {
         filteredUserList = new ArrayList<>();
-        final String desiredSex = preferences.getString(USER_SEX_VALUE, null);
-        final String desiredProfession = preferences.getString(USER_PROFESSION_VALUE, null);
-        final String desiredDietaryPreference = preferences.getString(USER_DIETARY_PREFERENCES_VALUE, null);
-        final String desiredLocationPreference = preferences.getString(USER_DESIRED_LOCATION_PREFERENCE, null);
-        final String additionalPreference = preferences.getString(USER_ADDITIONAL_PREFERENCES, null);
-        final String searchCriteria = preferences.getString(USER_SEARCH_CRITERIA_VALUE, null);
-
         for (DataSnapshot userSnapshot : dataSnapshot.getChildren()) {
             User user = userSnapshot.getValue(User.class);
-
             filteredUserList.add(user);
         }
     }

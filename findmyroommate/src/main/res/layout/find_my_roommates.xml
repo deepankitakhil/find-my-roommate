@@ -76,6 +76,24 @@
         <TextView
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:hint="@string/search_criteria" />
+
+        <Spinner
+            android:id="@+id/search_criteria"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:entries="@array/search_criteria_list"
+            android:prompt="@string/search_criteria" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
             android:hint="@string/address" />
 
         <RadioGroup
@@ -88,11 +106,11 @@
                 android:id="@+id/same_address_location"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:checked="true"
                 android:layout_marginBottom="10dp"
                 android:layout_marginEnd="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_marginStart="10dp"
+                android:checked="true"
                 android:text="@string/same_address_location" />
 
             <RadioButton
@@ -122,24 +140,6 @@
             android:contentDescription="@string/powered_by_google_text"
             android:src="@drawable/powered_by_google_light"
             android:textAlignment="textEnd" />
-
-        <TextView
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/search_criteria" />
-
-        <Spinner
-            android:id="@+id/search_criteria"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:entries="@array/search_criteria_list"
-            android:prompt="@string/search_criteria" />
 
         <TextView
             android:layout_width="fill_parent"
